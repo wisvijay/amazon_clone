@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-String uri = 'http://<yourip>:3000';
+String uri = 'http://192.168.29.119:3000';
 
 class GlobalVariables {
   // RouteName
-  static const authRouteName = '/';
+  static const authRouteName = '/auth';
+  static const homeRouteName = '/home';
+
+  //TokenKey
+  static const tokenKey = 'x-auth-token';
 
   // Sizes
   static const kHorizontalSpaceTiny = SizedBox(width: 5);

@@ -1,6 +1,7 @@
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/auth/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 enum Auth {
@@ -17,8 +18,9 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signin;
-  final GlobalKey _signUpFormKey = GlobalKey<FormState>();
-  final GlobalKey _signInFormKey = GlobalKey<FormState>();
+  final _signUpFormKey = GlobalKey<FormState>();
+  final _signInFormKey = GlobalKey<FormState>();
+  final AuthServices _authServices = AuthServices();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,6 +32,23 @@ class _AuthScreenState extends State<AuthScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  signUp() {
+    _authServices.signUpUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+    );
+  }
+
+  signIn() {
+    _authServices.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
   }
 
   @override
@@ -88,7 +107,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       GlobalVariables.kVerticalSpaceSmall,
                       CustomButton(
                         text: 'SignUp',
-                        action: () {},
+                        action: () {
+                          if (_signUpFormKey.currentState!.validate()) {
+                            signUp();
+                          }
+                        },
                       )
                     ],
                   ),
@@ -130,7 +153,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         GlobalVariables.kVerticalSpaceSmall,
                         CustomButton(
                           text: 'Sign In',
-                          action: () {},
+                          action: () {
+                            if (_signInFormKey.currentState!.validate()) {
+                              signIn();
+                            }
+                          },
                         )
                       ],
                     )),

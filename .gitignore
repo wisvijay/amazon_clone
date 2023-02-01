@@ -45,3 +45,6 @@ app.*.map.json
 
 # node modules
 node_modules
+
+# password files
+passwords.js
